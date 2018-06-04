@@ -43,6 +43,8 @@ console.log(myObj);
 
 //task5
 let frameworks = [4.7, 'Angular', '6Angular', 'React/Redux'];
+let react = frameworks[frameworks.length - 1];
+let angular4 = `${frameworks[1]}${Math.floor(frameworks[0])}`; 
 let x =
 	'google released ' +
   	'new version' + 
@@ -51,10 +53,10 @@ let x =
   	Math.floor(frameworks[0]) + 
   	' ' +
   	'But real speed is ' +
-  	`${frameworks[frameworks.length - 1]}`;
+  	`${react}`;
 let x1 = 
-	`google released new version ${frameworks[1]}${Math.floor(frameworks[0])} ` + 
-	`But real speed is ${frameworks[frameworks.length - 1]}`;
+	`google released new version ${angular4} ` + 
+	`But real speed is ${react}`;
 
 console.log(x);
 console.log(x1);
