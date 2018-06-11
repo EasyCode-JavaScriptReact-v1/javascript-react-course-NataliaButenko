@@ -6,13 +6,15 @@ function testValue (value) {
   if (typeof value == 'function') {
     return false;
   };
-  if (typeof value == 'string' && value.length != 10) {
-    return `Длина вашей строки: ${value.length}.`;
+  if (typeof value === 'string') {
+    if(value.length != 10) {
+      return `Длина вашей строки: ${value.length}.`;
+    };
+    if (value.length == 10) {
+      return 'you win';
+    };
   };
-  if (typeof value == 'string' && value.length == 10) {
-    return 'you win';
-  }
-}
+};
 let typeofNumber = 10;
 let typeofObject = {
   name: 'Natalia'
@@ -33,31 +35,33 @@ console.log(testValue(typeofString10));//'you win'
 
 //Task2
 function numbersBetween(a, b) {
-  if (typeof a == 'number' && typeof b == 'number') {
-    for (let i = a; i <= b; i++) {
-      console.log(i);
-    };
+  let arr = [];
+  if (typeof a !== 'number' && typeof b !== 'number') {
+    return 'Вы ввели не числа';
+  }
+  for (let i = a; i <= b; i++) {
+    arr.push(i);
   };
+  return arr;
 };
 
-numbersBetween(3, 5);
+console.log('numbersBetween', numbersBetween(3, 5));
 
-numbersBetween(10, 12);
+console.log('numbersBetween', numbersBetween(10, 12));
 
 
 
 //Task3
 function FizzBuzz(num) {
-  if (num % 3 == 0  && num % 5 == 0) {
-      console.log('FizzBuzz');
-    } else if (num % 3 == 0) {
-      console.log('Fizz');
-    } else if (num % 5 == 0) {
-      console.log('Buzz');
-    } else {
-      console.log(num);
-    };
-}
+  let str = '';
+  if (num % 3 === 0) {
+    str = str + 'Fizz';
+  };
+  if (num % 5 === 0) {
+    str = str + 'Buzz';
+  };
+  return str.length === 0 ? num : str;
+};
 
 function fizzBuzz100(number) {
   for (let i = number; i <= 100; i++) {
@@ -138,9 +142,10 @@ let category = webStore.category;
 
 function dataProcessing (data) {
   for (let key in category){
+    let categoryItems = category[key];
     console.log(`Категория: ${key}`);
-    for (let i = 0; i < category[key].length; i++){
-      console.log(`   Содержимое категории:  ${category[key][i]}`);
+    for (let i = 0; i < categoryItems.length; i++){
+      console.log(`   Содержимое категории:  ${categoryItems[i]}`);
     };
   };
 };
