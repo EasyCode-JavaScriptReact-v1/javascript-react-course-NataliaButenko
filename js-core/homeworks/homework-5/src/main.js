@@ -174,3 +174,17 @@ task1(arr, 55);
 //@SUPER 1
 
 //@SUPER 2
+
+ let firstArray1 = [25,10,[10,[15]]];
+
+ function changeArr(arr) {
+  if (Array.isArray(arr)) {
+  return arr.reduce(function(done,curr){
+    return done.concat(changeArr(curr));
+    }, []);
+  } else {
+    return arr;
+  };
+};
+
+console.log(changeArr(firstArray1));
