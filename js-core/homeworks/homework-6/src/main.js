@@ -11,19 +11,18 @@ let javaScript = {
 };
 
 function countLetterA(str) {
-  let counter = 0;
   let arrStr = str.split('');
-  arrStr.forEach(function(elem, index, arr) {
-    if (elem === 'a') {
-      counter++;
+  let countLetterA2 = arrStr.reduce(function(newElem, elem) {
+    if(elem === 'a') {
+      newElem++;
     };
-    return counter;
-  });
-  return counter;
+    return newElem;
+  },0);
+  return countLetterA2;
 };
-
 console.log('Task1 ', countLetterA(randomString));
 console.log('Task1 ', countLetterA(javaScript.html + user.name));
+
 
 
 
@@ -32,7 +31,7 @@ console.log('Task1 ', countLetterA(javaScript.html + user.name));
 function reverseEachWord(str) {
   let arrStr = str.split(' ');
   let newArrStr = [];
-  arrStr.forEach(function(elem, index, arr) {
+  arrStr.forEach(function(elem) {
     let arrElem = elem.split('');
     let reversElemInArr = arrElem.reverse();
     let reversElemInString = reversElemInArr.join('');
@@ -48,16 +47,16 @@ console.log('Task2 ', reverseEachWord('The Document Object Model (DOM) is a prog
 
 //Task3
 
-function reverseEachWord2(str, boolean) {
+function reverseEachWord2(str, shouldReverse) {
   let arrStr = str.split(' ');
   let newArrStr = [];
-  arrStr.forEach(function(elem, index, arr) {
+  arrStr.forEach(function(elem) {
     let arrElem = elem.split('');
     let reversElemInArr = arrElem.reverse();
     let reversElemInString = reversElemInArr.join('');
     newArrStr.push(reversElemInString);
   });
-  if (boolean === true) {
+  if (shouldReverse === true) {
     newArrStr.reverse();
   };
   return newArrStr.join(' ');
@@ -72,24 +71,15 @@ console.log('Task3 ', reverseEachWord2('Hi my Name is', true));
 
 //Task4
 
-function wordCounter(sentence) {
+function wordCounter2(sentence) {
   let arrayOfSentences = sentence.split(' ');
-  let elements = arrayOfSentences.reduce(function(newValue, elem, index, arr) {
-    let initialElem = elem;
-    let counter = 0;
-    arrayOfSentences.forEach(function(elem, index, arr) {
-      if (initialElem === elem) {
-        counter++;
-      };
-    });
-    newValue[initialElem] = counter;
+  let elements = arrayOfSentences.reduce(function(newValue, elem) {
+    newValue[elem] = newValue[elem] ? newValue[elem] + 1 : 1;
     return newValue;
   }, {});
   return elements;
 };
-
-console.log('Task4 ', wordCounter('Both Java and Java Script is programming and programming OOPBased Language'));
-
+console.log('Task4 ', wordCounter2('Both Java and Java Script is programming and programming OOPBased Language'));
 
 
 
@@ -186,5 +176,41 @@ function createHashTags(arr) {
 console.log('Task5 ',createHashTags(listOfCompanys));
 
 //@ SUPER1
+let notUniqArray = [1, 1, 2, 2, 2, 5, 10, 25, 30, 5, 1, 0, 22, 3, 10, 3];
+
+function uniqueElements(arr) {
+  let uniqueElements = [];
+  nextInput:
+    for (let i = 0; i < arr.length; i++) {
+      let initialElem = arr[i];
+      for (let k = 0; k < uniqueElements.length; k++) {
+        if (uniqueElements[k] == initialElem) {
+          continue nextInput;
+        };
+      };
+      uniqueElements.push(initialElem);
+    };
+  return uniqueElements;
+};
+
+console.log('SUPER1 ',uniqueElements(notUniqArray));
+
 
 //@ SUPER2
+let array = [1, -1, 0, 15, -59, 7];
+function filter(callback, arr) {
+  let newArr = [];
+  for(let i = 0; i < arr.length; i++) {
+    if(!callback(arr[i])) {
+      continue;
+    };
+    newArr.push(arr[i]);
+  };
+  return newArr;
+};
+
+let res = function exampleCallbackFunction(value) {
+  return value < 0;
+};
+
+console.log('SUPER2 ', filter(res, array));
