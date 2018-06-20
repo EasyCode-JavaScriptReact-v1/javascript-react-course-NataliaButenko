@@ -29,15 +29,8 @@ console.log('Task1 ', countLetterA(javaScript.html + user.name));
 //Task2
 
 function reverseEachWord(str) {
-  let arrStr = str.split(' ');
-  let newArrStr = [];
-  arrStr.forEach(function(elem) {
-    let arrElem = elem.split('');
-    let reversElemInArr = arrElem.reverse();
-    let reversElemInString = reversElemInArr.join('');
-    newArrStr.push(reversElemInString);
-  });
-  return newArrStr.join(' ');
+  let arrStr = str.split('').reverse().join('');
+  return arrStr.split(' ').reverse().join(' ');
 };
 
 console.log('Task2 ', reverseEachWord('You don\'t have to do anything special to begin using the DOM. Different browsers have different implementations of the DOM'));
@@ -48,23 +41,17 @@ console.log('Task2 ', reverseEachWord('The Document Object Model (DOM) is a prog
 //Task3
 
 function reverseEachWord2(str, shouldReverse) {
-  let arrStr = str.split(' ');
-  let newArrStr = [];
-  arrStr.forEach(function(elem) {
-    let arrElem = elem.split('');
-    let reversElemInArr = arrElem.reverse();
-    let reversElemInString = reversElemInArr.join('');
-    newArrStr.push(reversElemInString);
-  });
+  let arrStr = str.split('').reverse().join('');
+  let arrSting = arrStr.split(' ').reverse().join(' ');
   if (shouldReverse === true) {
-    newArrStr.reverse();
+    arrSting = arrSting.split(' ').reverse().join(' ');
   };
-  return newArrStr.join(' ');
+  return arrSting;
 };
 
-console.log('Task3 ', reverseEachWord2('The Document Object Model (DOM) is a programming interface for HTML and XML documents', true));
-console.log('Task3 ', reverseEachWord2('Hi my Name is', false));
-console.log('Task3 ', reverseEachWord2('Hi my Name is', true));
+console.log('Task3 true', reverseEachWord2('The Document Object Model (DOM) is a programming interface for HTML and XML documents', true));
+console.log('Task3 false', reverseEachWord2('Hi my Name is', false));
+console.log('Task3 true', reverseEachWord2('Hi my Name is', true));
 
 
 
