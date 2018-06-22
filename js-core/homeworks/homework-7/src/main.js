@@ -1,11 +1,8 @@
 //Task1
 function add(arg1) {
-	let value1 = arg1;
 	return function (arg2) {
-		let value2 = arg2;
 		return function (arg3) {
-			let value3 = arg3;
-			return value1 = value1 + value2 + value3;
+			return arg1 = arg1 + arg2 + arg3;
 		};
 	};
 };
@@ -109,4 +106,118 @@ console.log('Super ', jun2.addCounter(3, methodName));
 console.log('Super ', jun2.logger(1, 2, 3, 4));
 console.log('Super ', jun2.logger(1, 2, 3, 4));
 console.log('Super ', jun2.logger(1, 2, 3, 4));
-console.log('Super ', jun2.logger(1, 2, 3, 4)); 
+console.log('Super ', jun2.logger(1, 2, 3, 4));
+
+//Задачи: 
+
+function factorial(n) {
+	if(n > 1) {
+		return n * factorial(n - 1);
+	};
+	return n
+};
+console.log(factorial(5));
+
+
+function sumToRecursion(n) {
+	if(n > 1) {
+		return n + factorial(n - 1);
+	};
+	return n;
+};
+console.log(sumToRecursion(4));
+
+
+
+function sumToCycle(n) {
+	let k = n;
+	for (let i = 1; i < k; i++) {
+		n = n + (k - i);
+	};
+	return n;
+};
+console.log(sumToCycle(4));
+
+
+
+function sum (arg1) {
+	return function (arg2) {
+		return arg1 + arg2;
+	};
+};
+console.log(sum(5)(-1));
+
+
+
+function makeBuffer() {
+	let buffer = '';
+	return function (value) {
+		if(value == undefined) {
+			return buffer;
+		};
+		return buffer = buffer + value;
+	};
+};
+let buffer = makeBuffer();
+console.log(buffer(1));
+console.log(buffer(2));
+console.log(buffer(3));
+console.log(buffer());
+
+
+
+
+function makeBuffer2() {
+	let buff = '';
+	function buffer2 (value) {
+		if(value == undefined) {
+			return buff;
+		};
+		return buff = buff + value;
+	};
+	buffer2.clear = function () {
+		buff = '';
+	};
+	return buffer2;
+};
+let buffer2 = makeBuffer2();
+
+buffer2("Тест");
+buffer2(" тебя не съест ");
+console.log( buffer2() ); // Тест тебя не съест
+
+buffer2.clear();
+console.log( buffer2() );
+
+
+
+
+let users = [{
+  name: "Вася",
+  surname: 'Иванов',
+  age: 20
+}, {
+  name: "Петя",
+  surname: 'Чапаев',
+  age: 25
+}, {
+  name: "Маша",
+  surname: 'Медведева',
+  age: 18
+}];
+
+function byField(field) {
+	return function (a, b) {
+		return a[field] > b[field]? 1: -1;
+	};
+};
+
+users.sort(byField('name'));
+users.forEach(function(user) {
+	console.log( user.name );
+}); // Вася, Маша, Петя
+
+users.sort(byField('age'));
+users.forEach(function(user) {
+	console.log( user.name );
+}); // Маша, Вася, Петя
