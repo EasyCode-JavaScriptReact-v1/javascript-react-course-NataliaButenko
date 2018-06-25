@@ -71,7 +71,7 @@ function methodCounter2(obj, name, num, fn) {
 	let counter = num;
 	obj[name] = function(...args) {
 		if(counter > 0) {
-			counter -= 1;
+			counter--;
 			return `Call number ${counter + 1}, sum of arguments = ${fn(args)}`;
 		} else {
 			return 'ERROR ! add more methods';
