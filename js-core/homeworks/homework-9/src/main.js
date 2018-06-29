@@ -15,48 +15,42 @@ let developer2 = {
   goodDev: goodDev
 };
 
-function goodDev(dev) {
-	let arrRequirements = this.requirements;
+function goodDev (dev) {
+	let developerRequirements = this.requirements;
 	if(this.skills) {
-		let arrSkills = this.skills;
-		arrRequirements.forEach(function(elem) {
-			let initialElem = elem;
-			let comparison = arrSkills.some(function(elem) {
-				if(typeof elem == 'object') {
-					for(let key in elem) {
-						return elem[key] == initialElem 
-					};
+		let developerSkills = this.skills;
+		developerRequirements.forEach((initialElem) => {
+			let comparison = developerSkills.some((developerSkills) => {
+				for(let key in developerSkills) {
+					return developerSkills == initialElem 
 				};
-				return initialElem == elem;
+				return initialElem == developerSkills;
 			});
 			if (comparison) {
-				console.log( `required: ${elem} ...success`);
+				console.log( `required: ${initialElem} ...success`);
 			} else {
-				console.log( `required: ${elem} ...fail`);
+				console.log( `required: ${initialElem} ...fail`);
 			};
 		});
 	} else if(this.experience) {
-		let arrExperience = this.experience;
-		arrRequirements.forEach(function(elem) {
-			let initialElem = elem;
-			let comparison = arrExperience.some(function(elem) {
-				if(typeof elem == 'object') {
-					for(let key in elem) {
-						return elem[key] == initialElem 
-					};
+		let developerExperience = this.experience;
+		developerRequirements.forEach((initialElem) => {
+			let comparison = developerExperience.some((developerExperience) => {
+				for(let key in developerExperience) {
+					return developerExperience[key] == initialElem; 
 				};
-				return initialElem == elem;
+				return initialElem == developerExperience;
 			});
 			if (comparison) {
-				console.log( `Task1---> required: ${elem} ...success`);
+				console.log( `Task1---> required: ${initialElem} ...success`);
 			} else {
-			console.log( `Task1---> required: ${elem} ...fail`);
+			console.log( `Task1---> required: ${initialElem} ...fail`);
 			};
 		});
 	};
 };
 
-//developer1.goodDev();
+developer1.goodDev();
 developer2.goodDev();
 
 
@@ -70,7 +64,7 @@ let myObject = {
 };
 
 myObject.myFilter = function(param) {
-	let tmp = this.database.slice();
+	let tmp  = [...this.database];
 	let fnSort = function (arg1, arg2) {
 		return arg1[param] > arg2[param];
 	};
@@ -119,10 +113,8 @@ console.log('Task3---> Задание 1 --> нули в конце массив�
 console.log('Task3---> Задание 1 --> нули в конце массива ', moveZeroToEnd(arr2));
 
 let moveZeroToEnd2 = (arr) => {
-	let arrZero = arr.filter((elem) => elem === 0);
-	let arrayWithoutZeros = arr.filter((elem) => elem != 0);
-	return arrayWithoutZeros.concat(arrZero);
-}
+  return arr.filter((elem) => elem != 0).concat(arr.filter((elem) => elem === 0));
+};
 console.log('Task3---> Задание 1 --> нули в конце массива ', moveZeroToEnd2(arr1));
 console.log('Task3---> Задание 1 --> нули в конце массива ', moveZeroToEnd2(arr2));
 
@@ -176,18 +168,17 @@ console.log('Task3---> Задание 3', nameShuffler(strNameShuffler));
 
 
 //4
-let arrCapMe = ['jo', 'nelson', 'jurie'];
-//let arrCapMe = ['KARLY', 'DANIEL', 'KELSEY'];
+//let arrCapMe = ['jo', 'nelson', 'jurie'];
+let arrCapMe = ['KARLY', 'DANIEL', 'KELSEY'];
 let capMe = (arr) => {
-	let resArrCapMe = [];
-	arr.forEach((elem) => {
-		let elemArr = elem;
-		let firstCapitalLetter = elemArr.charAt(0).toUpperCase();
-		let theRestSmall = elemArr.slice(1, elemArr.length).toLowerCase();
-		let concatVersion = firstCapitalLetter.concat(theRestSmall);
-		resArrCapMe.push(concatVersion);
-	});
-	return resArrCapMe;
+  let resArrCapMe = arr.map((elem) =>{
+    let elemArr = elem;
+    let firstCapitalLetter = elemArr.charAt(0).toUpperCase();
+    let theRestSmall = elemArr.slice(1, elemArr.length).toLowerCase();
+    let concatVersion = firstCapitalLetter.concat(theRestSmall);
+    return concatVersion;
+  });
+  return resArrCapMe;
 };
 console.log('Task3---> Задание 4', capMe(arrCapMe));
 
@@ -195,13 +186,13 @@ console.log('Task3---> Задание 4', capMe(arrCapMe));
  let firstArray1 = [25,10,[10,[15]]];
 
 let changeArr = (arr) => {
-  	if (Array.isArray(arr)) {
- 	return arr.reduce((done,curr) => {
-    	return done.concat(changeArr(curr));
-  	}, []);
-  	} else {
-    	return arr;
-  	};
+  if (Array.isArray(arr)) {
+    return arr.reduce((done,curr) => {
+      return done.concat(changeArr(curr));
+    }, []);
+  } else {
+    return arr;
+  };
 };
 
 console.log('Task3--->', changeArr(firstArray1));
