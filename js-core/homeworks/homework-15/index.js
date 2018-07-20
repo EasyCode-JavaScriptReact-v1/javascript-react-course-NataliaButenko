@@ -54,120 +54,138 @@ console.log('Task2 ---> ', flatten([25, 10, [10, [15]]]));
 
 
 //Task3
-const dataUsers = [
-	{
-		name: 'Иван',
-		lastName: 'Петров',
-		email: 'IvanPetrov@ec.ua' 
-	},
-	{
-		name: 'Сергей',
-		lastName: 'Сергей',
-		email: 'SergeiSergeev@ec.ua' 
-	},
-	{
-		name: 'Иван',
-		lastName: 'Иванов',
-		email: 'IvanIvanov@ec.ua' 
-	},
-	{
-		name: 'Александр',
-		lastName: 'Александров',
-		email: 'AlexAlex@ec.ua'
-	},
-	{
-		name: 'Алекс',
-		lastName: 'Смирнов',
-		email: 'AlexSmirnov@ec.ua'
-	},
-	{
-		name: 'Сергей',
-		lastName: 'Волков',
-		email: 'VolkovSergey@ec.ua' 
-	},
-	{
-		name: 'Мария',
-		lastName: 'Шарапова',
-		email: 'MariyaSharapova@ec.ua' 
-	},
-	{
-		name: 'Александр',
-		lastName: 'Винник',
-		email: 'AlexVinnik@ec.u'  
-	},
-	{
-		name: 'Дарий',
-		lastName: 'Смирнов',
-		email: 'DariySmirnov@ec.ua' 
-	},
-	{
-		name: 'Елена',
-		lastName: 'Лещенко',
-		email: 'ElenaLeshenko@ec.ua' 
-	},
-	{
-		name: 'Ольга',
-		lastName: 'Новикова',
-		email: 'OlgaNovikova@ec.ua' 
-	},
-	{
-		name: 'Наталья',
-		lastName: 'Шемякина',
-		email: 'ShemyakinaN@ec.ua' 
-	},
-	{
-		name: 'Анна',
-		lastName: 'Донцова',
-		email: 'AnnaDontsova@ec.ua' 
-	},
-	{
-		name: 'Влад',
-		lastName: 'Яма',
-		email: 'VladYama@ec.ua' 
-	},
-	{
-		name: 'Кира',
-		lastName: 'Воробьева',
-		email: 'Kira1990@ec.ua' 
-	},
-	{
-		name: 'Виктор',
-		lastName: 'Кривенко',
-		email: 'ViktorKriv@ec.ua' 
-	}	
-];
+class UsersContacts {
+	constructor() {
+		this.dataUsers = [
+		{
+			name: 'Иван',
+			lastName: 'Петров',
+			email: 'IvanPetrov@ec.ua' 
+		},
+		{
+			name: 'Сергей',
+			lastName: 'Сергей',
+			email: 'SergeiSergeev@ec.ua' 
+		},
+		{
+			name: 'Иван',
+			lastName: 'Иванов',
+			email: 'IvanIvanov@ec.ua' 
+		},
+		{
+			name: 'Александр',
+			lastName: 'Александров',
+			email: 'AlexAlex@ec.ua'
+		},
+		{
+			name: 'Алекс',
+			lastName: 'Смирнов',
+			email: 'AlexSmirnov@ec.ua'
+		},
+		{
+			name: 'Сергей',
+			lastName: 'Волков',
+			email: 'VolkovSergey@ec.ua' 
+		},
+		{
+			name: 'Мария',
+			lastName: 'Шарапова',
+			email: 'MariyaSharapova@ec.ua' 
+		},
+		{
+			name: 'Александр',
+			lastName: 'Винник',
+			email: 'AlexVinnik@ec.u'  
+		},
+		{
+			name: 'Дарий',
+			lastName: 'Смирнов',
+			email: 'DariySmirnov@ec.ua' 
+		},
+		{
+			name: 'Елена',
+			lastName: 'Лещенко',
+			email: 'ElenaLeshenko@ec.ua' 
+		},
+		{
+			name: 'Ольга',
+			lastName: 'Новикова',
+			email: 'OlgaNovikova@ec.ua' 
+		},
+		{
+			name: 'Наталья',
+			lastName: 'Шемякина',
+			email: 'ShemyakinaN@ec.ua' 
+		},
+		{
+			name: 'Анна',
+			lastName: 'Донцова',
+			email: 'AnnaDontsova@ec.ua' 
+		},
+		{
+			name: 'Влад',
+			lastName: 'Яма',
+			email: 'VladYama@ec.ua' 
+		},
+		{
+			name: 'Кира',
+			lastName: 'Воробьева',
+			email: 'Kira1990@ec.ua' 
+		},
+		{
+			name: 'Виктор',
+			lastName: 'Кривенко',
+			email: 'ViktorKriv@ec.ua' 
+		}	
+		];
+		this.columnHeadings = ['Name', 'Last name', 'Email'];
+	};
 
-const columnHeadings = ['Name', 'Last name', 'Email'];
+	render() {
+		let insert = document.querySelector('main > div');
+		insert.appendChild(this.createTable());
+	};
 
-function render() {
-	let createNewElement = function(newElem) {
+	createNewElement(newElem) {
 		return document.createElement(newElem);
 	};
-	let table = createNewElement('table');
-	table.setAttribute('class', 'table table-hover contacts');
-	let insert = document.querySelector('main > div');
-	let thead = createNewElement('thead');
-	table.appendChild(thead);
-	let tr = createNewElement('tr');
-	thead.appendChild(tr);
-	columnHeadings.forEach((elem) => {
-		let th = createNewElement('th');
-		th.textContent = elem;
-		tr.appendChild(th);
-	});
-	let tbody = createNewElement('tbody');
-	table.appendChild(tbody);
-	dataUsers.forEach((elem) => {
-		let trInTbody = createNewElement('tr')
-		tbody.appendChild(trInTbody);
+
+	createTable() {
+		let table = this.createNewElement('table');
+		table.setAttribute('class', 'table table-hover contacts');
+		table.appendChild(this.cteateTheadInTable());
+		table.appendChild(this.cteateTbodyInTable());
+		return table;
+	};
+
+	cteateTheadInTable() {
+		let thead = this.createNewElement('thead');
+		let tr = this.createNewElement('tr');
+		thead.appendChild(tr);
+		this.columnHeadings.forEach((elem) => {
+			let th = this.createNewElement('th');
+			th.textContent = elem;
+			tr.appendChild(th);
+		});
+		return thead;
+	};
+
+	cteateTbodyInTable() {
+		let tbody = this.createNewElement('tbody');
+		//table.appendChild(tbody);
+		this.dataUsers.forEach((elem) => {
+		let tr = this.createNewElement('tr')
+		tbody.appendChild(tr);
 		let arrObjkeys = Object.keys(elem);
 		arrObjkeys.forEach((elemTd) => {
-			let td = createNewElement('td');
+			let td = this.createNewElement('td');
 			td.textContent = elem[elemTd];
-			trInTbody.appendChild(td);
+			tr.appendChild(td);
+			});
 		});
-	});
-	return insert.appendChild(table);
+		return tbody;
+	};	
 };
 
-render();
+let usersContacts = new UsersContacts();
+usersContacts.render();
