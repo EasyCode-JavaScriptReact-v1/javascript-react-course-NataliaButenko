@@ -1,53 +1,11 @@
 //Task1
 
 const solution = arr => {
-	let arrRes = [];
-	let arrNumber = [];
-	let arrString = [];
-	let arr1_2 = [];
-	let arr3_4 = [];
-	let arr5_6 = [];
-	arr.forEach((elemArr) => {
-		if (elemArr.length === 2) {
-			elemArr.forEach((elem) => {
-				if(typeof elem === 'number') {
-					arrNumber.push(elem);
-				} else if(typeof elem === 'string') {
-					arrString.push(elem);
-				};
-			});
-		} else if(elemArr.length === 3) {
-			for(let i = 0; i < elemArr.length; i++) {
-				if(i === 0) {
-					arr1_2.push(elemArr[i]);
-				} else if(i === 1) {
-					arr3_4.push(elemArr[i]);
-				} else if (i === 2) {
-					arr5_6.push(elemArr[i]);
-				};
-			};
-			for(let i = 0; i< elemArr[1].length; i++) {
-				if(i === 0) {
-					arr1_2.push(elemArr[1][i]);
-				} else if(i === 1) {
-					arr3_4.push(elemArr[1][i]);
-				} else if (i === 2) {
-					arr5_6.push(elemArr[1][i]);
-				};
-			};
-		};
+	return arr[0].map((_, index) => {
+		return arr.map((value) => {
+			return value[index];
+		});
 	});
-	if(arr.length === 3) {
-		arrRes.push(arrNumber);
-		arrRes.push(arrString);
-	} else if(arr.length === 2) {
-		arrRes.push(arr1_2);
-		arrRes.push(arr3_4);
-		arrRes.push(arr5_6);
-	} else if(arr.length === 1) {
-		arrRes.push([]);
-	};
-	return arrRes;
 };
 
 
