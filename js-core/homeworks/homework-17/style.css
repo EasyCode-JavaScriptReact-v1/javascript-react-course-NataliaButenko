@@ -1,0 +1,14 @@
+img {
+	width: 800px;
+	height: 400px;
+}
+
+.buttons {
+	margin-left: 320px;
+}
+
+.fetch {
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+}
