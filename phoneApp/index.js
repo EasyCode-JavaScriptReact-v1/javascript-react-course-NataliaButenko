@@ -1,3 +1,4 @@
+//Task3
 class UsersContacts {
 	constructor() {
 		this.dataUsers = [
@@ -85,111 +86,62 @@ class UsersContacts {
 		this.columnHeadings = ['Name', 'Last name', 'Email'];
 	};
 
-	render() {
-
-		document.body.innerHTML += this.createHeader();
-		document.body.innerHTML += this.createMain();
-		let insert = document.querySelector('main > div');
-		insert.appendChild(this.createTable());
-		document.body.innerHTML += this.createFooter();
-	};
-
-	createNewElement(newElem) {
-		return document.createElement(newElem);
+	createForm() {
+		return `
+		    <form class="form-inline search-form">
+		        <div class="form-group">
+		          	<label class="sr-only" for="search">Search</label>
+		          	<input type="text" class="form-control" id= "search" placeholder="Search">
+		        </div>
+		    </form>
+		`
 	};
 
 	createTable() {
-		let table = this.createNewElement('table');
-		table.setAttribute('class', 'table table-hover contacts');
-		table.appendChild(this.cteateTheadInTable());
-		table.appendChild(this.cteateTbodyInTable());
-		return table;
-	};
-
-	cteateTheadInTable() {
-		let thead = this.createNewElement('thead');
-		let tr = this.createNewElement('tr');
-		thead.appendChild(tr);
-		this.columnHeadings.forEach((elem) => {
-			let th = this.createNewElement('th');
-			th.textContent = elem;
-			tr.appendChild(th);
-		});
-		return thead;
-	};
-
-	cteateTbodyInTable() {
-		let tbody = this.createNewElement('tbody');
-		//table.appendChild(tbody);
-		this.dataUsers.forEach((elem) => {
-		let tr = this.createNewElement('tr')
-		tbody.appendChild(tr);
-		let arrObjkeys = Object.keys(elem);
-		arrObjkeys.forEach((elemTd) => {
-			let td = this.createNewElement('td');
-			td.textContent = elem[elemTd];
-			tr.appendChild(td);
-			});
-		});
-		return tbody;
-	};
-
-	createHeader() {
-		return `
-			<header class = 'header'>
-				<div class = 'container top-radius'>
-					<h2>Contacts</h2>
-				</div>
-			</header>
+		let self = this;
+		let thead = function() {
+			let openThead = `
+				<thead>
+          			<tr>
+			`;
+			let createThead = self.columnHeadings.reduce((start, elem) => {
+				start += `<th>${elem}</th>\n`
+				return start;
+			}, '');
+			let resultThead = openThead + `${createThead}</tr></thead>`;
+			return resultThead;
+		}
+		let tbody = function() {
+			let openTbody = `
+				<tbody>
+			`
+			let createTbody = self.dataUsers.reduce((start, elem) => {
+				start += `
+					<tr>
+           				<td>${elem.name}</td>
+            			<td>${elem.lastName}</td>
+            			<td>${elem.email}</td>
+          			</tr>
+				`
+				return start;
+			}, '');
+			let resultTbody = openTbody + `${createTbody}</tbody>`;
+			return resultTbody;
+		}
+		let resultTable = `
+			<table class="table table-hover contacts">
+				${thead()}
+				${tbody()}
+			</table>
 		`
-	};
-
-	createMain() {
-		return `
-			<main>
-				<div class="container">
-					<form class="form-inline search-form">
-						<div class="form-group">
-							<label class="sr-only" for="search">Search</label>
-							<input type="text" class="form-control" id= "search" placeholder="Search">
-						</div>
-					</form>
-
-			</main>		
-		`
+		return resultTable;
 	}
 
-	createFooter() {
-		return `
-			<footer class="footer">
-				<div class="container bottom-radius">
-					<nav class="main-nav">
-						<a href="index.html" class="tab active">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-							<span class = "tab-text">Contacts</span>
-						</a>
-						<a href="keypad.html" class="tab">
-							<span class="glyphicon glyphicon-th" aria-hidden="true"></span>
-							<span class = "tab-text">Keypad</span>
-						</a>
-						<a href="edit-contact.html" class="tab">
-							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-							<span class = "tab-text">Edit contact</span>
-						</a>
-						<a href="user.html" class="tab">
-							<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-							<span class = "tab-text">User</span>
-						</a>
-						<a href="add-user.html" class="tab">
-							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-							<span class = "tab-text">Add user</span>
-						</a>
-					</nav>
-				</div>
-			</footer>
-		`
-	}	
+	addForm() {
+		let mainContainer = document.querySelector('main .container');
+		mainContainer.innerHTML += `${this.createForm()}${this.createTable()}`;
+	}
 };
 
 let usersContacts = new UsersContacts();
-usersContacts.render();
+usersContacts.addForm();
