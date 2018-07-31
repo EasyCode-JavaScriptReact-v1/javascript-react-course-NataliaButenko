@@ -1,0 +1,23 @@
+h1 {
+	text-align: center;
+}
+
+li {
+	margin: 0, auto;
+}
+
+section {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+p {
+	margin: 0;
+}
+
+button {
+	margin-left: 500px;
+	height: 40px;
+	width:350px;
+}
+
