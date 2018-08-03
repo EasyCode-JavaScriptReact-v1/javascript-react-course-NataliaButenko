@@ -329,3 +329,7 @@ h3 {
   margin: 0 auto;
   font-weight: bold;
 }
+
+nav.user-top-line > a {
+  color: inherit;
+}

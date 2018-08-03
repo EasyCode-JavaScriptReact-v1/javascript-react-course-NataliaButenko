@@ -94,7 +94,7 @@ class UsersContacts {
 		          	<input type="text" class="form-control" id= "search" placeholder="Search">
 		        </div>
 		    </form>
-		`
+		`;
 	};
 
 	createTable() {
@@ -110,11 +110,11 @@ class UsersContacts {
 			}, '');
 			let resultThead = openThead + `${createThead}</tr></thead>`;
 			return resultThead;
-		}
+		};
 		let tbody = function() {
 			let openTbody = `
 				<tbody>
-			`
+			`;
 			let createTbody = self.dataUsers.reduce((start, elem) => {
 				start += `
 					<tr>
@@ -122,7 +122,7 @@ class UsersContacts {
             			<td>${elem.lastName}</td>
             			<td>${elem.email}</td>
           			</tr>
-				`
+				`;
 				return start;
 			}, '');
 			let resultTbody = openTbody + `${createTbody}</tbody>`;
@@ -133,15 +133,73 @@ class UsersContacts {
 				${thead()}
 				${tbody()}
 			</table>
-		`
+		`;
 		return resultTable;
-	}
+	};
 
 	addForm() {
 		let mainContainer = document.querySelector('main .container');
 		mainContainer.innerHTML += `${this.createForm()}${this.createTable()}`;
-	}
+	};
 };
 
 let usersContacts = new UsersContacts();
 usersContacts.addForm();
+
+let table = document.querySelector('.table');
+
+table.addEventListener('click', function(e) {
+	if(e.target.tagName != 'TH') {
+  		return;
+	};
+	sortTable(e.target.cellIndex, e.target.textContent);
+});
+
+function sortTable(colNum, caption) {
+  	let tbody = table.getElementsByTagName('tbody')[0];
+  	let rowsArray = [].slice.call(tbody.rows);
+  	let compare;
+
+  	switch (caption) {
+   	 	case 'Name':
+      	compare = function(rowA, rowB) {
+			if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
+				return -1;
+			};
+    		if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) { 
+    			return 1;
+    		};
+    		return 0;
+      	};
+      	break;
+    case 'Last name':
+      	compare = function(rowA, rowB) {
+			if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
+				return -1;
+			};
+    		if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) { 
+    			return 1;
+    		};
+    		return 0;
+      	};
+      	break;
+    case 'Email':
+      	compare = function(rowA, rowB) {
+			if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
+				return -1;
+			};
+    		if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) { 
+    			return 1;
+    		};
+    		return 0;
+      	};
+      	break;
+  	};
+
+	rowsArray.sort(compare);
+  	table.removeChild(tbody);
+  	for (let i = 0; i < rowsArray.length; i++) {
+   	 	tbody.appendChild(rowsArray[i]);
+  	};
+  	table.appendChild(tbody);
+};
