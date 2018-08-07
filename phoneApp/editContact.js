@@ -30,12 +30,12 @@ class EditContact {
         let editAdditionalField = this.additionalUserInfo.reduce((start, elem) => {
         	if(elem === 'phone') {
         		start += `
-	        		<div class="edit-field">
-	            		<button href="#" class="delete-btn"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-	              			<span>${elem}</span>
-	              			<span>+38 (063) 733 44 55</span>
-	            		</button>
-	          		</div>
+        		<div class="edit-field">
+            		<button href="#" class="delete-btn"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+              			<span>${elem}</span>
+              			<span>+38 (063) 733 44 55</span>
+            		</button>
+          		</div>
           		`;
         	} else {
 	        	start += `
@@ -52,12 +52,12 @@ class EditContact {
             <div class="edit-field">
               <button href="#" class="delete-contact">delete contact</button>
             </div>
-        `
+        `;
         let resEditAdditionalField = open + editAdditionalField + buttonDelContacts + '</div></div>';
         return resEditAdditionalField;
 	};
 
-	displayEditContact() {
+	renderEditContact() {
 		let captionEditContact = document.querySelector('.container.top-radius');
 		captionEditContact.innerHTML = `
 	      	<nav class="user-top-line">
@@ -74,4 +74,5 @@ class EditContact {
 					${this.fieldAdditionalUserInfo()}
 		`;
 	};
+
 };

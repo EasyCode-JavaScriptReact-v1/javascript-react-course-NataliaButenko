@@ -25,16 +25,42 @@ class Keypad {
 		return resKeypadHolder;
 	};
 
-	displayKeypad() {
+	renderKeypad() {
 		let captionUser = document.querySelector('.container.top-radius');
 		captionUser.innerHTML = `<h2>Keypad</h2>`;
 		let contentKeypad = this.createNumberField() + this.createKeypadHolder();
 		let mainContainer = document.querySelector('main .container');
 		mainContainer.innerHTML = contentKeypad;
+		this.addListeners();
 	};
 
-	enteringNumbers(text) {
-		let input =  document.querySelector('span.numbers');
-		input.textContent += text;
+	addListeners() {
+		let keypadHolder = document.querySelector('div.keypad-holder');
+  		keypadHolder.addEventListener('click', function(e) {
+    		if(e.target.tagName === 'BUTTON') {
+    			let input =  document.querySelector('span.numbers');
+    			if(input.textContent.length === 0) {
+    				input.textContent += `(${e.target.textContent}`;
+    			} else if(input.textContent.length === 4) {
+    				input.textContent += `)-${e.target.textContent}`;
+    			} else if(input.textContent.length === 8) {
+    				input.textContent += `-${e.target.textContent}`;
+    			} else if(input.textContent.length === 11) {
+    				input.textContent += `-${e.target.textContent}`;
+    			} else if(input.textContent.length > 14) {
+    				return;
+    			} else {
+    				input.textContent += e.target.textContent;
+    			}
+    // 			console.log(input.textContent.length);
+				// input.textContent += e.target.textContent;	
+    		};
+  		});
+  		let deletNum = document.querySelector('.glyphicon-circle-arrow-left');
+  		deletNum.addEventListener('click', function(e) {
+  			let input =  document.querySelector('span.numbers');
+  			input.textContent = input.textContent.slice(0, -1);
+  		});
 	};
+
 };

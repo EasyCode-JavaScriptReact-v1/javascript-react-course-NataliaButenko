@@ -127,7 +127,7 @@ class UsersContacts {
 			}, '');
 			let resultTbody = openTbody + `${createTbody}</tbody>`;
 			return resultTbody;
-		}
+		};
 		let resultTable = `
 			<table class="table table-hover contacts">
 				${thead()}
@@ -137,69 +137,74 @@ class UsersContacts {
 		return resultTable;
 	};
 
-	addForm() {
-		let mainContainer = document.querySelector('main .container');
-		mainContainer.innerHTML += `${this.createForm()}${this.createTable()}`;
+	sort() {
+		let table = document.querySelector('.table');
+
+		table.addEventListener('click', function(e) {
+			if(e.target.tagName != 'TH') {
+		  		return;
+			};
+			sortTable(e.target.cellIndex, e.target.textContent);
+		});
+
+		function sortTable(colNum, caption) {
+		  	let tbody = table.getElementsByTagName('tbody')[0];
+		  	let rowsArray = [].slice.call(tbody.rows);
+		  	let compare;
+
+		  	switch (caption) {
+		   	 	case 'Name':
+		      	compare = function(rowA, rowB) {
+					if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
+						return -1;
+					};
+		    		if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) { 
+		    			return 1;
+		    		};
+		    		return 0;
+		      	};
+		      	break;
+		    case 'Last name':
+		      	compare = function(rowA, rowB) {
+					if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
+						return -1;
+					};
+		    		if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) { 
+		    			return 1;
+		    		};
+		    		return 0;
+		      	};
+		      	break;
+		    case 'Email':
+		      	compare = function(rowA, rowB) {
+					if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
+						return -1;
+					};
+		    		if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) { 
+		    			return 1;
+		    		};
+		    		return 0;
+		      	};
+		      	break;
+		  	};
+
+			rowsArray.sort(compare);
+		  	table.removeChild(tbody);
+		  	for (let i = 0; i < rowsArray.length; i++) {
+		   	 	tbody.appendChild(rowsArray[i]);
+		  	};
+		  	table.appendChild(tbody);
+		};		
 	};
+
+	renderForm() {
+		let mainContainer = document.querySelector('main .container');
+		mainContainer.innerHTML = `${this.createForm()}${this.createTable()}`;
+		this.sort();
+	};
+	
 };
 
 let usersContacts = new UsersContacts();
-usersContacts.addForm();
+usersContacts.renderForm();
 
-let table = document.querySelector('.table');
-
-table.addEventListener('click', function(e) {
-	if(e.target.tagName != 'TH') {
-  		return;
-	};
-	sortTable(e.target.cellIndex, e.target.textContent);
-});
-
-function sortTable(colNum, caption) {
-  	let tbody = table.getElementsByTagName('tbody')[0];
-  	let rowsArray = [].slice.call(tbody.rows);
-  	let compare;
-
-  	switch (caption) {
-   	 	case 'Name':
-      	compare = function(rowA, rowB) {
-			if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
-				return -1;
-			};
-    		if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) { 
-    			return 1;
-    		};
-    		return 0;
-      	};
-      	break;
-    case 'Last name':
-      	compare = function(rowA, rowB) {
-			if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
-				return -1;
-			};
-    		if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) { 
-    			return 1;
-    		};
-    		return 0;
-      	};
-      	break;
-    case 'Email':
-      	compare = function(rowA, rowB) {
-			if(rowA.cells[colNum].textContent < rowB.cells[colNum].textContent) {
-				return -1;
-			};
-    		if(rowA.cells[colNum].textContent > rowB.cells[colNum].textContent) { 
-    			return 1;
-    		};
-    		return 0;
-      	};
-      	break;
-  	};
-
-	rowsArray.sort(compare);
-  	table.removeChild(tbody);
-  	for (let i = 0; i < rowsArray.length; i++) {
-   	 	tbody.appendChild(rowsArray[i]);
-  	};
-  	table.appendChild(tbody);
-};

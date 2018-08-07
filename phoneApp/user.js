@@ -56,7 +56,7 @@ class User {
 		return resOptionTable;
 	};
 
-	displayUser() {
+	renderUser() {
 		let captionUser = document.querySelector('.container.top-radius');
 		captionUser.innerHTML = `
 	      	<nav class="user-top-line">
@@ -67,4 +67,5 @@ class User {
 		let mainContainer = document.querySelector('main .container');
 		mainContainer.innerHTML = `${this.showUser()}${this.lineOptions()}${this.telNumber()}${this.tableOption()}`;
 	};
+	
 };

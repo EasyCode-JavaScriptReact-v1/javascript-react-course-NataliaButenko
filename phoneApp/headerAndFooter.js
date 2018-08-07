@@ -58,12 +58,14 @@ class HeaderAndFooter {
     	`;
 	};
 
-	createTemplate() {
+	renderTemplate() {
 		document.body.innerHTML = this.createHeader() + this.createMain() + this.createFooter();
 	};
+
 };
+
 let headerAndFooter = new HeaderAndFooter('Contacts');
-headerAndFooter.createTemplate();
+headerAndFooter.renderTemplate();
 
 
 let buttonKeypad = document.querySelector('a.Keypad');
@@ -71,13 +73,7 @@ let buttonKeypad = document.querySelector('a.Keypad');
 buttonKeypad.addEventListener('click', function(event) {
   event.preventDefault();
   let keypad = new Keypad();
-  keypad.displayKeypad();
-  let keypadHolder = document.querySelector('div.keypad-holder');
-  keypadHolder.addEventListener('click', function(e) {
-    if(e.target.tagName === 'BUTTON') {
-      keypad.enteringNumbers(e.target.textContent);
-    };
-  });
+  keypad.renderKeypad();
 });
 
 
@@ -86,7 +82,7 @@ let buttonEditContact = document.querySelector('a.Edit');
 buttonEditContact.addEventListener('click', function(event) {
   event.preventDefault();
   let editContact = new EditContact();
-  editContact.displayEditContact();
+  editContact.renderEditContact();
 });
 
 let buttonUser = document.querySelector('a.User');
@@ -94,7 +90,7 @@ let buttonUser = document.querySelector('a.User');
 buttonUser.addEventListener('click', function(event) {
   event.preventDefault();
   let user = new User();
-  user.displayUser();
+  user.renderUser();
 });
 
 let buttonAddUser = document.querySelector('a.Add');
@@ -102,5 +98,13 @@ let buttonAddUser = document.querySelector('a.Add');
 buttonAddUser.addEventListener('click', function(event) {
   event.preventDefault();
   let addUser = new AddUser();
-  addUser.displayEditContact();
+  addUser.renderAddUser();
+});
+
+let buttonContacts = document.querySelector('a.Contacts');
+
+buttonContacts.addEventListener('click', function(event) {
+  event.preventDefault();
+  let contacts = new UsersContacts();
+  contacts.renderForm();
 });
