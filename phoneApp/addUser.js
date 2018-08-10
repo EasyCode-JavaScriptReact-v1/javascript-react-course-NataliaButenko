@@ -16,10 +16,15 @@ class AddUser {
   		`;
   		let editBasicField = this.basicUserInfo.reduce((start, elem) => {
   			start += `
-            	<div class="edit-field">
+            	<div class="edit-field ">
               		<button href="#" class="add-btn"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 		<span>${elem}</span>
               		</button>
+                  <label>
+                    <input type="text" class="${elem}"/>
+                    <button class="save">s</button>
+                    <button class="cancel">c</button>
+                  </label>
             	</div>
   			`;
   			return start;
@@ -34,8 +39,9 @@ class AddUser {
           		<div class="edit-info">
   		`;
   		let editAdditionalField = this.additionalUserInfo.reduce((start, elem) => {
+        let addClass =  elem.replace(/\s/g, '_');
   			start += `
-            	<div class="edit-field">
+            	<div class="edit-field ${addClass}">
               		<button href="#" class="add-btn"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 		<span>${elem}</span>
               		</button>
@@ -52,11 +58,26 @@ class AddUser {
   		return resEditAdditionalField;
   	};
 
+    addEvents() {
+      let test = document.querySelector('.main-info-holder');
+      test.addEventListener('click', function(e) {
+        if(e.target.tagName == "BUTTON" || e.target.parentNode.tagName == "BUTTON") {
+          let label = document.querySelectorAll('div.edit-field label');
+          [...label].forEach((elem) => {
+            if(elem.firstElementChild.className == e.target.textContent){
+              elem.style.display = 'block';
+            };
+          });
+        };
+      });
+
+    }
+
   	renderAddUser() {
   		let captionAddUser = document.querySelector('.container.top-radius');
   		captionAddUser.innerHTML = `
    			<nav class="user-top-line">
-          		<a href="user.html">Cansel</a>
+          		<a href="user.html">Cancel</a>
           		<button class = "done-btn">Done</button>
         		</nav>
   		`;
@@ -67,5 +88,6 @@ class AddUser {
         		</div>
         		${this.fieldAdditionalAddUserInfo()}
   		`;
+      this.addEvents();
   	};
 };

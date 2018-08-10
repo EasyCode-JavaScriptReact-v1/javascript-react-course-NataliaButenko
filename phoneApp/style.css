@@ -302,6 +302,7 @@ h3 {
   border-bottom: 1px solid #fff;
   width: 100%;
   display: flex;
+  flex-direction: column;
 }
 
 .delete-btn {
@@ -334,4 +335,24 @@ h3 {
 
 nav.user-top-line > a {
   color: inherit;
+}
+
+input[type ="text"].numbers {
+  border: none;
+  background: #ccc !important;
+  text-align: center;
+  outline: none;
+}
+
+div.edit-field label {
+  display: none;
+}
+
+div.edit-field label button {
+  width: 20px;
+  height: 26px;
+}
+
+div.edit-field label input {
+  width: 192px;
 }

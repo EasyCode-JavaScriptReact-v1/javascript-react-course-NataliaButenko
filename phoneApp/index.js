@@ -2,86 +2,86 @@
 class UsersContacts {
 	constructor() {
 		this.dataUsers = [
-		{
-			name: 'Иван',
-			lastName: 'Петров',
-			email: 'IvanPetrov@ec.ua' 
-		},
-		{
-			name: 'Сергей',
-			lastName: 'Сергей',
-			email: 'SergeiSergeev@ec.ua' 
-		},
-		{
-			name: 'Иван',
-			lastName: 'Иванов',
-			email: 'IvanIvanov@ec.ua' 
-		},
-		{
-			name: 'Александр',
-			lastName: 'Александров',
-			email: 'AlexAlex@ec.ua'
-		},
-		{
-			name: 'Алекс',
-			lastName: 'Смирнов',
-			email: 'AlexSmirnov@ec.ua'
-		},
-		{
-			name: 'Сергей',
-			lastName: 'Волков',
-			email: 'VolkovSergey@ec.ua' 
-		},
-		{
-			name: 'Мария',
-			lastName: 'Шарапова',
-			email: 'MariyaSharapova@ec.ua' 
-		},
-		{
-			name: 'Александр',
-			lastName: 'Винник',
-			email: 'AlexVinnik@ec.u'  
-		},
-		{
-			name: 'Дарий',
-			lastName: 'Смирнов',
-			email: 'DariySmirnov@ec.ua' 
-		},
-		{
-			name: 'Елена',
-			lastName: 'Лещенко',
-			email: 'ElenaLeshenko@ec.ua' 
-		},
-		{
-			name: 'Ольга',
-			lastName: 'Новикова',
-			email: 'OlgaNovikova@ec.ua' 
-		},
-		{
-			name: 'Наталья',
-			lastName: 'Шемякина',
-			email: 'ShemyakinaN@ec.ua' 
-		},
-		{
-			name: 'Анна',
-			lastName: 'Донцова',
-			email: 'AnnaDontsova@ec.ua' 
-		},
-		{
-			name: 'Влад',
-			lastName: 'Яма',
-			email: 'VladYama@ec.ua' 
-		},
-		{
-			name: 'Кира',
-			lastName: 'Воробьева',
-			email: 'Kira1990@ec.ua' 
-		},
-		{
-			name: 'Виктор',
-			lastName: 'Кривенко',
-			email: 'ViktorKriv@ec.ua' 
-		}	
+		// {
+		// 	name: 'Иван',
+		// 	lastName: 'Петров',
+		// 	email: 'IvanPetrov@ec.ua' 
+		// },
+		// {
+		// 	name: 'Сергей',
+		// 	lastName: 'Сергей',
+		// 	email: 'SergeiSergeev@ec.ua' 
+		// },
+		// {
+		// 	name: 'Иван',
+		// 	lastName: 'Иванов',
+		// 	email: 'IvanIvanov@ec.ua' 
+		// },
+		// {
+		// 	name: 'Александр',
+		// 	lastName: 'Александров',
+		// 	email: 'AlexAlex@ec.ua'
+		// },
+		// {
+		// 	name: 'Алекс',
+		// 	lastName: 'Смирнов',
+		// 	email: 'AlexSmirnov@ec.ua'
+		// },
+		// {
+		// 	name: 'Сергей',
+		// 	lastName: 'Волков',
+		// 	email: 'VolkovSergey@ec.ua' 
+		// },
+		// {
+		// 	name: 'Мария',
+		// 	lastName: 'Шарапова',
+		// 	email: 'MariyaSharapova@ec.ua' 
+		// },
+		// {
+		// 	name: 'Александр',
+		// 	lastName: 'Винник',
+		// 	email: 'AlexVinnik@ec.u'  
+		// },
+		// {
+		// 	name: 'Дарий',
+		// 	lastName: 'Смирнов',
+		// 	email: 'DariySmirnov@ec.ua' 
+		// },
+		// {
+		// 	name: 'Елена',
+		// 	lastName: 'Лещенко',
+		// 	email: 'ElenaLeshenko@ec.ua' 
+		// },
+		// {
+		// 	name: 'Ольга',
+		// 	lastName: 'Новикова',
+		// 	email: 'OlgaNovikova@ec.ua' 
+		// },
+		// {
+		// 	name: 'Наталья',
+		// 	lastName: 'Шемякина',
+		// 	email: 'ShemyakinaN@ec.ua' 
+		// },
+		// {
+		// 	name: 'Анна',
+		// 	lastName: 'Донцова',
+		// 	email: 'AnnaDontsova@ec.ua' 
+		// },
+		// {
+		// 	name: 'Влад',
+		// 	lastName: 'Яма',
+		// 	email: 'VladYama@ec.ua' 
+		// },
+		// {
+		// 	name: 'Кира',
+		// 	lastName: 'Воробьева',
+		// 	email: 'Kira1990@ec.ua' 
+		// },
+		// {
+		// 	name: 'Виктор',
+		// 	lastName: 'Кривенко',
+		// 	email: 'ViktorKriv@ec.ua' 
+		// }	
 		];
 		this.columnHeadings = ['Name', 'Last name', 'Email'];
 	};
@@ -202,9 +202,32 @@ class UsersContacts {
 		mainContainer.innerHTML = `${this.createForm()}${this.createTable()}`;
 		this.sort();
 	};
+
+	uploadingData() {
+		const url = 'http://easycode-js.herokuapp.com/Butenko_N/users';
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = () => {
+			if(xhr.readyState === XMLHttpRequest.DONE) {
+				//this.dataUsers = xhr.responseText;
+				let usersArr = JSON.parse(xhr.responseText);
+				let newUsers = usersArr.map((elem) => {
+					return {
+						email: elem.email,
+						name: elem.fullName.split(' ')[0],
+						lastName: elem.fullName.split(' ')[1],
+					};
+				});
+				this.dataUsers = newUsers;
+				this.renderForm();
+			};
+		};
+		xhr.open('GET', url, true);
+		xhr.send();	
+		
+	};
 	
 };
 
 let usersContacts = new UsersContacts();
-usersContacts.renderForm();
+usersContacts.uploadingData();
 

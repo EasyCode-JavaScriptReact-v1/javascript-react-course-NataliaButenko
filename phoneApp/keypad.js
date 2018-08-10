@@ -7,7 +7,7 @@ class Keypad {
 		return `
       		<div class="number">
         		<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-        		<span class ="numbers"></span>
+        		<input type ="text" class="numbers">
         		<span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
       		</div>
 		`;
@@ -31,36 +31,65 @@ class Keypad {
 		let contentKeypad = this.createNumberField() + this.createKeypadHolder();
 		let mainContainer = document.querySelector('main .container');
 		mainContainer.innerHTML = contentKeypad;
-		this.addListeners();
+		this.addEvents();
 	};
 
-	addListeners() {
+	addEvents() {
 		let keypadHolder = document.querySelector('div.keypad-holder');
   		keypadHolder.addEventListener('click', function(e) {
     		if(e.target.tagName === 'BUTTON') {
-    			let input =  document.querySelector('span.numbers');
-    			if(input.textContent.length === 0) {
-    				input.textContent += `(${e.target.textContent}`;
-    			} else if(input.textContent.length === 4) {
-    				input.textContent += `)-${e.target.textContent}`;
-    			} else if(input.textContent.length === 8) {
-    				input.textContent += `-${e.target.textContent}`;
-    			} else if(input.textContent.length === 11) {
-    				input.textContent += `-${e.target.textContent}`;
-    			} else if(input.textContent.length > 14) {
+    			let input =  document.querySelector('input.numbers');
+    			if(input.value.length === 0) {
+    				input.value += `(${e.target.textContent}`;
+    			} else if(input.value.length === 4) {
+    				input.value += `)-${e.target.textContent}`;
+    			} else if(input.value.length === 8) {
+    				input.value += `-${e.target.textContent}`;
+    			} else if(input.value.length === 11) {
+    				input.value += `-${e.target.textContent}`;
+    			} else if(input.value.length > 14) {
     				return;
     			} else {
-    				input.textContent += e.target.textContent;
-    			}
-    // 			console.log(input.textContent.length);
-				// input.textContent += e.target.textContent;	
+    				input.value += e.target.textContent;
+    			};	
     		};
   		});
   		let deletNum = document.querySelector('.glyphicon-circle-arrow-left');
   		deletNum.addEventListener('click', function(e) {
-  			let input =  document.querySelector('span.numbers');
-  			input.textContent = input.textContent.slice(0, -1);
+  			let input =  document.querySelector('input.numbers');
+  			input.value = input.value.slice(0, -1);
   		});
+  		let input = document.querySelector('input.numbers');
+  		input.onkeypress = function(event) {
+  			if((event.charCode >= 48 && event.charCode <=57) || event.charCode == 42 || event.charCode == 35) {
+    			if(input.value.length === 0) {
+    				input.value += `(${event.target.textContent}`;
+    			} else if(input.value.length === 4) {
+    				input.value += `)-${event.target.textContent}`;
+    			} else if(input.value.length === 8) {
+    				input.value += `-${event.target.textContent}`;
+    			} else if(input.value.length === 11) {
+    				input.value += `-${event.target.textContent}`;
+    			} else if(input.value.length > 14) {
+    				return false;
+    			} else {
+    				input.value += event.target.textContent;
+    			};
+  			} else {
+  				return false;
+  			};
+		};
+		let addNum = document.querySelector('.glyphicon-plus-sign');
+		addNum.addEventListener('click', function(e) {
+			let addUser = new AddUser();
+			addUser.renderAddUser();
+			let placeNum = document.querySelector('.add_mobile_phone');
+			placeNum.innerHTML = `
+				<span>
+				+38 ${input.value}
+				</span>
+			`;
+		});
 	};
 
 };
