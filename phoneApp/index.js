@@ -1,4 +1,3 @@
-//Task3
 let headerAndFooter = new HeaderAndFooter('Contacts');
 headerAndFooter.renderTemplate();
 
@@ -26,8 +25,8 @@ let buttonUser = document.querySelector('a.User');
 
 buttonUser.addEventListener('click', function(event) {
   event.preventDefault();
-  let user = new User();
-  user.renderUser();
+/*  let user = new User();
+  user.renderUser();*/
 });
 
 let buttonAddUser = document.querySelector('a.Add');

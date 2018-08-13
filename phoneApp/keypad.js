@@ -83,12 +83,8 @@ class Keypad {
 		addNum.addEventListener('click', function(e) {
 			let addUser = new AddUser();
 			addUser.renderAddUser();
-			let placeNum = document.querySelector('.add_mobile_phone');
-			placeNum.innerHTML = `
-				<span>
-				+38 ${input.value}
-				</span>
-			`;
+			let placeNum = document.querySelector('.Mobile_phone');
+			placeNum.value = `+38 ${input.value}`;
 		});
 	};
 

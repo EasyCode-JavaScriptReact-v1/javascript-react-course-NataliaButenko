@@ -1,8 +1,8 @@
 class AddUser {
   	constructor() {
-		this.basicUserInfo = ['First Name', 'Last Name', 'Company'];
+		this.basicUserInfo = ['First Name', 'Last Name', 'Mobile phone', 'Email'];
 		this.additionalUserInfo = [
-			'add mobile phone', 'add home phone', 'add email', 'add address', 'add birthday', 'add social profile', 'add field'
+			'add home phone', 'company', 'add address', 'add birthday', 'add social profile', 'add field'
 		];  	
   	};
 
@@ -15,18 +15,14 @@ class AddUser {
         	</div>
   		`;
   		let editBasicField = this.basicUserInfo.reduce((start, elem) => {
-  			start += `
-            	<div class="edit-field ">
-              		<button href="#" class="add-btn"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                		<span>${elem}</span>
-              		</button>
-                  <label>
-                    <input type="text" class="${elem}"/>
-                    <button class="save">s</button>
-                    <button class="cancel">c</button>
-                  </label>
-            	</div>
-  			`;
+        let addClass =  elem.replace(/\s/g, '_');
+          start +=`
+            <div class="edit-field add-btn">
+            			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            			<input type="text" class="glyphicon-plus-sign ${addClass}" placeholder="${elem}"/>
+								
+            </div>
+          `;
   			return start;
   		},'');
   		let resEditBasicField = addPhoto + open + `${editBasicField}</div>`;
@@ -39,12 +35,11 @@ class AddUser {
           		<div class="edit-info">
   		`;
   		let editAdditionalField = this.additionalUserInfo.reduce((start, elem) => {
-        let addClass =  elem.replace(/\s/g, '_');
+       /* let addClass =  elem.replace(/\s/g, '_');*/
   			start += `
-            	<div class="edit-field ${addClass}">
-              		<button href="#" class="add-btn"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                		<span>${elem}</span>
-              		</button>
+            	<div class="edit-field add-btn">
+              	<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                	<input type="text" class="glyphicon-plus-sign" placeholder="${elem}"/>
             	</div>
   			`;
   			return start;
@@ -59,18 +54,40 @@ class AddUser {
   	};
 
     addEvents() {
-      let test = document.querySelector('.main-info-holder');
-      test.addEventListener('click', function(e) {
-        if(e.target.tagName == "BUTTON" || e.target.parentNode.tagName == "BUTTON") {
-          let label = document.querySelectorAll('div.edit-field label');
-          [...label].forEach((elem) => {
-            if(elem.firstElementChild.className == e.target.textContent){
-              elem.style.display = 'block';
-            };
-          });
-        };
+      let delEnteredData = document.querySelector('button.delete-contact');
+      delEnteredData.addEventListener('click', function() {
+        let input = document.querySelectorAll('input[placeholder]');
+        [...input].forEach(elem => {
+          elem.value = '';
+        })
       });
+      let addUser = document.querySelector('button.done-btn');
+      addUser.addEventListener('click', function() {
+        let input = document.querySelectorAll('input[placeholder]');
+      	let objUser = [...input].reduce((done, elem) => {
+      		if(elem.className === 'glyphicon-plus-sign Email') {
+      			done.email = elem.value;
+					} else if(elem.className === 'glyphicon-plus-sign First_Name') {
+      		  done.fullName = `${elem.value} `;
+          } else if(elem.className === 'glyphicon-plus-sign Last_Name') {
+            done.fullName += elem.value;
+          } else if(elem.className === 'glyphicon-plus-sign Mobile_phone') {
+      		  done.phone = elem.value;
+          } else {
+            let key = elem.placeholder.replace(/\s/g, '_');
+            done[key] = elem.value;
+          };
+      		return done;
+				}, {});
 
+        fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(objUser)
+        });
+			});
     }
 
   	renderAddUser() {

@@ -1,5 +1,6 @@
 class EditContact {
-	constructor() {
+	constructor(user) {
+		this.user = user;
 		this.basicUserInfo = ['First Name', 'Last Name', 'Company'];
 		this.additionalUserInfo = [
 			'phone', 'add home phone', 'add email', 'add address', 'add birthday', 'add social profile', 'add field'
@@ -61,14 +62,14 @@ class EditContact {
 		let captionEditContact = document.querySelector('.container.top-radius');
 		captionEditContact.innerHTML = `
 	      	<nav class="user-top-line">
-	        	<a href="user.html">Cansel</a>
+	        	<a href="user.html">Cancel</a>
 	        	<button  type = "submit" form = "edit-contact" formaction="#" formmethod="get" class = "done-btn">Done</button>
 	      	</nav>
 		`;
 		let mainContainer = document.querySelector('main .container');
 		mainContainer.innerHTML = `
 			<div class="edit-main-info">
- 				<div class="edit-foto"><img src="user-face-mini.png" alt="#" class=" user-img img-circle center-block"></div>
+ 				<div class="edit-foto"><img src="user_img.png" alt="#" class=" user-img img-circle center-block"></div>
 					${this.fieldsBasicUserInfo()}
 					</div>
 					${this.fieldAdditionalUserInfo()}

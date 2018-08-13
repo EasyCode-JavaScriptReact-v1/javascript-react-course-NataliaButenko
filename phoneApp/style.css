@@ -47,9 +47,6 @@ h2 {
   margin: 0;
 }
 
-h3 {
-  margin: 0;
-}
 
 .container {
   width: 400px;
@@ -60,6 +57,7 @@ h3 {
 .top-radius {
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
+  padding-bottom: 0px;
 }
 
 .bottom-radius {
@@ -230,7 +228,6 @@ h3 {
 }
 
 .tel-number {
-  margin-bottom: 20px;
   font-size: 16px;
 }
 
@@ -293,16 +290,11 @@ h3 {
 
 .edit-foto {
   margin-right: 10px;
-/*  width: 100px;
-  height: 100px;*/
-}
 
 .edit-field {
   padding: 5px 0;
   border-bottom: 1px solid #fff;
   width: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .delete-btn {
@@ -344,15 +336,30 @@ input[type ="text"].numbers {
   outline: none;
 }
 
-div.edit-field label {
-  display: none;
+input.glyphicon-plus-sign {
+  width: 222px;
+  color: #333;
+  border: none;
+  background: #ccc !important;
+  outline: none;
 }
 
-div.edit-field label button {
-  width: 20px;
-  height: 26px;
+input::-webkit-input-placeholder {
+  color: #4cda64;
 }
 
-div.edit-field label input {
-  width: 192px;
+h4 {
+  margin-bottom: 5px;
+  margin-top: 0px;
+}
+
+button.remove-btn {
+  border: none;
+  background-color: #ccc;
+}
+
+button.buttonEdit {
+  color: #e32910;
+  font-weight: bold;
+  margin-left: 105px;
 }

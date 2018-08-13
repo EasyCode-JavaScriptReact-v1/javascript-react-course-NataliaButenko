@@ -1,6 +1,6 @@
 class UsersContacts {
 	constructor() {
-		this.dataUsers = [
+		//this.dataUsers = [
 		// {
 		// 	name: 'Иван',
 		// 	lastName: 'Петров',
@@ -81,7 +81,7 @@ class UsersContacts {
 		// 	lastName: 'Кривенко',
 		// 	email: 'ViktorKriv@ec.ua' 
 		// }	
-		];
+		//];
 		this.columnHeadings = ['Name', 'Last name', 'Email'];
 	};
 
@@ -114,9 +114,9 @@ class UsersContacts {
 			let openTbody = `
 				<tbody>
 			`;
-			let createTbody = self.dataUsers.reduce((start, elem) => {
+			let createTbody = dataUsers.reduce((start, elem) => {
 				start += `
-					<tr>
+					<tr data-uid="${elem.id}">
            				<td>${elem.name}</td>
             			<td>${elem.lastName}</td>
             			<td>${elem.email}</td>
@@ -140,10 +140,21 @@ class UsersContacts {
 		let table = document.querySelector('.table');
 
 		table.addEventListener('click', function(e) {
-			if(e.target.tagName != 'TH') {
-		  		return;
+			if(e.target.tagName === 'TH') {
+        sortTable(e.target.cellIndex, e.target.textContent);
+			} else if(e.target.tagName === 'TD') {
+				let id = e.target.parentNode.dataset.uid;
+				let obj;
+				for(let i = 0; i < dataUsers.length; i++) {
+					if(dataUsers[i].id === id) {
+						obj = dataUsers[i];
+					}
+				};
+				let user = new User(obj);
+				user.renderUser()
+			} else {
+				return;
 			};
-			sortTable(e.target.cellIndex, e.target.textContent);
 		});
 
 		function sortTable(colNum, caption) {
@@ -203,24 +214,23 @@ class UsersContacts {
 	};
 
 	loadData() {
-		const xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = () => {
-			if(xhr.readyState === XMLHttpRequest.DONE) {
-				//this.dataUsers = xhr.responseText;
-				let usersArr = JSON.parse(xhr.responseText);
-				let newUsers = usersArr.map((elem) => {
-					return {
-						email: elem.email,
-						name: elem.fullName.split(' ')[0],
-						lastName: elem.fullName.split(' ')[1],
-					};
+    fetch(API_URL)
+      .then(user => {
+        return user.json();
+      })
+      .then(userJson => {
+      	let newUsers = userJson.map((elem) => {
+      		return {
+      			email: elem.email,
+            name: elem.fullName.split(' ')[0],
+            lastName: elem.fullName.split(' ')[1],
+						id: elem._id,
+						phone: elem.phone,
+					}
 				});
-				this.dataUsers = newUsers;
-				this.renderForm();
-			};
-		};
-		xhr.open('GET', API_URL, true);
-		xhr.send();
+        dataUsers = newUsers;
+        this.renderForm();
+      });
 	};
 	
 };
