@@ -1,9 +1,9 @@
 class EditContact {
 	constructor(user) {
 		this.user = user;
-		this.basicUserInfo = ['First Name', 'Last Name', 'Company'];
+		this.basicUserInfo = ['First Name', 'Last Name', 'Phone', 'Email'];
 		this.additionalUserInfo = [
-			'phone', 'add home phone', 'add email', 'add address', 'add birthday', 'add social profile', 'add field'
+			'add home phone', 'company', 'add address', 'add birthday', 'add social profile', 'add field'
 		];
 	};
 
@@ -11,10 +11,9 @@ class EditContact {
 		let open = '<div class="main-info-holder">';
 		let editBasicField = this.basicUserInfo.reduce((start, elem) => {
 			start += `
-          		<div class="edit-field">
-            		<button href="#" class="add-btn"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-              			<span>${elem}</span>
-            		</button>
+          		<div class="edit-field add-btn">
+            		<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            		<input type="text" class="glyphicon-plus-sign" placeholder="${elem}"/>
           		</div>
 			`;
 			return start;
@@ -29,24 +28,12 @@ class EditContact {
         	<div class="edit-info">
         `;
         let editAdditionalField = this.additionalUserInfo.reduce((start, elem) => {
-        	if(elem === 'phone') {
-        		start += `
-        		<div class="edit-field">
-            		<button href="#" class="delete-btn"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-              			<span>${elem}</span>
-              			<span>+38 (063) 733 44 55</span>
-            		</button>
-          		</div>
-          		`;
-        	} else {
-	        	start += `
-	        	    <div class="edit-field">
-	            		<button href="#" class="add-btn"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-	              			<span>${elem}</span>
-	            		</button>
-	          		</div>
-	        	`;
-        	};
+        	start += `
+        		<div class="edit-field add-btn">
+        			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            	<input type="text" class="glyphicon-plus-sign" placeholder="${elem}"/>
+        		</div>
+        	`;
         	return start;
         },'');
         let buttonDelContacts = `
@@ -74,6 +61,18 @@ class EditContact {
 					</div>
 					${this.fieldAdditionalUserInfo()}
 		`;
+    let input = document.querySelectorAll('input.glyphicon-plus-sign');
+    [...input].forEach((elem) => {
+    	if(elem.placeholder == "First Name") {
+    		elem.value = this.user.name;
+			} else if(elem.placeholder == "Last Name") {
+        elem.value = this.user.lastName;
+			} else if(elem.placeholder == "Phone") {
+        elem.value = this.user.phone;
+			} else if(elem.placeholder == "Email") {
+        elem.value = this.user.email;
+			}
+		});
 	};
 
 };

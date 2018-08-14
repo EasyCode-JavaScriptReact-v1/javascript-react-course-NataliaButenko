@@ -65,9 +65,20 @@ class User {
 		buttonEdit.addEventListener('click', function () {
 			let editContacts = new EditContact(self.user);
 			editContacts.renderEditContact();
-    })
+    });
+		let buttonDel = document.querySelector('button.remove-btn');
+		buttonDel.addEventListener('click', function() {
+			alert('Are you sure you want to delete this user?');
+      let url = `${API_URL}/${self.user.id}`;
+      fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+		});
 
-	}
+	};
 
 	renderUser() {
 		let captionUser = document.querySelector('.container.top-radius');

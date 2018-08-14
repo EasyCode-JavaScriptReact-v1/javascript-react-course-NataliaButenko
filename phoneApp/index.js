@@ -17,8 +17,8 @@ let buttonEditContact = document.querySelector('a.Edit');
 
 buttonEditContact.addEventListener('click', function(event) {
   event.preventDefault();
-  let editContact = new EditContact();
-  editContact.renderEditContact();
+/*  let editContact = new EditContact();
+  editContact.renderEditContact();*/
 });
 
 let buttonUser = document.querySelector('a.User');
