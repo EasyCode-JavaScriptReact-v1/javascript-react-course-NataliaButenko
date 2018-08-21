@@ -1,15 +1,11 @@
 class EditContact {
 	constructor(user) {
 		this.user = user;
-		this.basicUserInfo = ['First Name', 'Last Name', 'Phone', 'Email'];
-		this.additionalUserInfo = [
-			'add home phone', 'company', 'add address', 'add birthday', 'add social profile', 'add field'
-		];
 	};
 
 	fieldsBasicUserInfo() {
 		let open = '<div class="main-info-holder">';
-		let editBasicField = this.basicUserInfo.reduce((start, elem) => {
+		let editBasicField = basicUserInfo.reduce((start, elem) => {
 			start += `
           		<div class="edit-field add-btn">
             		<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -18,7 +14,7 @@ class EditContact {
 			`;
 			return start;
 		}, '');
-		let resEditBasicField = open + editBasicField + '</div>';
+		let resEditBasicField = `${open} ${editBasicField} </div>`;
 		return resEditBasicField;
 	};
 
@@ -27,7 +23,7 @@ class EditContact {
 		<div class="scroll-holder">
         	<div class="edit-info">
         `;
-        let editAdditionalField = this.additionalUserInfo.reduce((start, elem) => {
+        let editAdditionalField = additionalUserInfo.reduce((start, elem) => {
         	start += `
         		<div class="edit-field add-btn">
         			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
@@ -41,7 +37,7 @@ class EditContact {
               <button href="#" class="delete-contact">delete contact</button>
             </div>
         `;
-        let resEditAdditionalField = open + editAdditionalField + buttonDelContacts + '</div></div>';
+        let resEditAdditionalField = `${open} ${editAdditionalField} ${buttonDelContacts} </div></div>`;
         return resEditAdditionalField;
 	};
 
@@ -67,11 +63,11 @@ class EditContact {
     		elem.value = this.user.name;
 			} else if(elem.placeholder == "Last Name") {
         elem.value = this.user.lastName;
-			} else if(elem.placeholder == "Phone") {
+			} else if(elem.placeholder == "Mobile phone") {
         elem.value = this.user.phone;
 			} else if(elem.placeholder == "Email") {
         elem.value = this.user.email;
-			}
+			};
 		});
 	};
 

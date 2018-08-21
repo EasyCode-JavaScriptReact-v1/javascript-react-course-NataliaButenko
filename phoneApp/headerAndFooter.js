@@ -1,13 +1,6 @@
 class HeaderAndFooter {
 	constructor(caption) {
 		this.caption = caption;
-		this.renderLink = [
-			{content:'Contacts', icon: 'search'},
-			{content:'Keypad', icon: 'th'},
-			{content:'Edit contact', icon: 'pencil'},
-			{content:'User', icon: 'user'},
-			{content:'Add user', icon: 'plus'}
-		];
 	};
 
 	createHeader() {
@@ -21,33 +14,30 @@ class HeaderAndFooter {
   		return header;
 	};
 
-	createFooter() {
-		let done = `
-		<footer class="footer">
-    		<div class="container bottom-radius">
-      			<nav class="main-nav">
-      	`;
-      	let testIndexHtml = function(str) {
-      		if(str === 'Contacts') {
-      			return 'index';
-      		} else {
-      			return str;
-      		};
-      	};
+  renderLink({href, icon}) {
+    return `
+				<a href="${href}" class="tab ${href}">
+						 <span class="glyphicon glyphicon-${icon}" aria-hidden="true"></span>
+							<span class = "tab-text">${href}</span>
+				</a>
+			`;
+  };
 
-      	let contentNav = this.renderLink.reduce((start, elem) => {
-      		start += `
-      		    <a href="${testIndexHtml(elem.content)}.html" class="tab ${elem.content}">
-          			<span class="glyphicon glyphicon-${elem.icon}" aria-hidden="true"></span>
-          			<span class = "tab-text">${elem.content}</span>
-        		</a>
-      		`;
-      		return start;
-      	}, done);
-
-      	let footer = contentNav + '</nav>\n </div>\n </footer>';
-    	return footer;
-	};
+  createFooter() {
+    return `
+			<footer class="footer">
+					<div class="container bottom-radius">
+							<nav class="main-nav">
+							${ this.renderLink({ href:'Contacts', icon: 'search' }) }
+							${ this.renderLink({ href:'Keypad', icon: 'th' }) }
+							${ this.renderLink({ href:'Edit contact',  icon: 'pencil' }) }
+							${ this.renderLink({ href:'User',  icon: 'user' }) }
+							${ this.renderLink({ href:'Add user',  icon: 'plus' }) }
+							</nav>
+				 <div>
+			</footer> 
+			`;
+  };
 
 	createMain() {
 		return `

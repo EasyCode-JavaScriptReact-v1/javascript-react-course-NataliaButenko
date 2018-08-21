@@ -1,89 +1,4 @@
 class UsersContacts {
-	constructor() {
-		//this.dataUsers = [
-		// {
-		// 	name: 'Иван',
-		// 	lastName: 'Петров',
-		// 	email: 'IvanPetrov@ec.ua' 
-		// },
-		// {
-		// 	name: 'Сергей',
-		// 	lastName: 'Сергей',
-		// 	email: 'SergeiSergeev@ec.ua' 
-		// },
-		// {
-		// 	name: 'Иван',
-		// 	lastName: 'Иванов',
-		// 	email: 'IvanIvanov@ec.ua' 
-		// },
-		// {
-		// 	name: 'Александр',
-		// 	lastName: 'Александров',
-		// 	email: 'AlexAlex@ec.ua'
-		// },
-		// {
-		// 	name: 'Алекс',
-		// 	lastName: 'Смирнов',
-		// 	email: 'AlexSmirnov@ec.ua'
-		// },
-		// {
-		// 	name: 'Сергей',
-		// 	lastName: 'Волков',
-		// 	email: 'VolkovSergey@ec.ua' 
-		// },
-		// {
-		// 	name: 'Мария',
-		// 	lastName: 'Шарапова',
-		// 	email: 'MariyaSharapova@ec.ua' 
-		// },
-		// {
-		// 	name: 'Александр',
-		// 	lastName: 'Винник',
-		// 	email: 'AlexVinnik@ec.u'  
-		// },
-		// {
-		// 	name: 'Дарий',
-		// 	lastName: 'Смирнов',
-		// 	email: 'DariySmirnov@ec.ua' 
-		// },
-		// {
-		// 	name: 'Елена',
-		// 	lastName: 'Лещенко',
-		// 	email: 'ElenaLeshenko@ec.ua' 
-		// },
-		// {
-		// 	name: 'Ольга',
-		// 	lastName: 'Новикова',
-		// 	email: 'OlgaNovikova@ec.ua' 
-		// },
-		// {
-		// 	name: 'Наталья',
-		// 	lastName: 'Шемякина',
-		// 	email: 'ShemyakinaN@ec.ua' 
-		// },
-		// {
-		// 	name: 'Анна',
-		// 	lastName: 'Донцова',
-		// 	email: 'AnnaDontsova@ec.ua' 
-		// },
-		// {
-		// 	name: 'Влад',
-		// 	lastName: 'Яма',
-		// 	email: 'VladYama@ec.ua' 
-		// },
-		// {
-		// 	name: 'Кира',
-		// 	lastName: 'Воробьева',
-		// 	email: 'Kira1990@ec.ua' 
-		// },
-		// {
-		// 	name: 'Виктор',
-		// 	lastName: 'Кривенко',
-		// 	email: 'ViktorKriv@ec.ua' 
-		// }	
-		//];
-		this.columnHeadings = ['Name', 'Last name', 'Email'];
-	};
 
 	createForm() {
 		return `
@@ -97,18 +12,16 @@ class UsersContacts {
 	};
 
 	createTable() {
-		let self = this;
 		let thead = function() {
-			let openThead = `
-				<thead>
-          			<tr>
-			`;
-			let createThead = self.columnHeadings.reduce((start, elem) => {
-				start += `<th>${elem}</th>\n`
-				return start;
-			}, '');
-			let resultThead = openThead + `${createThead}</tr></thead>`;
-			return resultThead;
+		  return `
+		  <thead>
+		    <tr>
+		        <th>Name</th>
+		        <th>Last name</th>
+		        <th>Email</th>
+		    </tr>
+		  </thead>
+		  `;
 		};
 		let tbody = function() {
 			let openTbody = `
@@ -124,7 +37,7 @@ class UsersContacts {
 				`;
 				return start;
 			}, '');
-			let resultTbody = openTbody + `${createTbody}</tbody>`;
+			let resultTbody = `${openTbody} ${createTbody}</tbody>`;
 			return resultTbody;
 		};
 		let resultTable = `
@@ -148,10 +61,10 @@ class UsersContacts {
 				for(let i = 0; i < dataUsers.length; i++) {
 					if(dataUsers[i].id === id) {
 						obj = dataUsers[i];
-					}
-				};
-				let user = new User(obj);
-				user.renderUser()
+					};
+			  };
+        let user = new User(obj);
+        user.renderUser()
 			} else {
 				return;
 			};
@@ -220,10 +133,11 @@ class UsersContacts {
       })
       .then(userJson => {
       	let newUsers = userJson.map((elem) => {
+      	  const [name, lastName] = elem.fullName.split(' ');
       		return {
       			email: elem.email,
-            name: elem.fullName.split(' ')[0],
-            lastName: elem.fullName.split(' ')[1],
+            name: name,
+            lastName: lastName,
 						id: elem._id,
 						phone: elem.phone,
 					}

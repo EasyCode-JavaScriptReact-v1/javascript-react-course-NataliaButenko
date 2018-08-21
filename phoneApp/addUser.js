@@ -1,10 +1,4 @@
 class AddUser {
-  	constructor() {
-		this.basicUserInfo = ['First Name', 'Last Name', 'Mobile phone', 'Email'];
-		this.additionalUserInfo = [
-			'add home phone', 'company', 'add address', 'add birthday', 'add social profile', 'add field'
-		];  	
-  	};
 
   	fieldsBasicAddUserInfo() {
   		let open = '<div class="main-info-holder">';
@@ -14,7 +8,7 @@ class AddUser {
             	<span>add foto</span></button>
         	</div>
   		`;
-  		let editBasicField = this.basicUserInfo.reduce((start, elem) => {
+  		let editBasicField = basicUserInfo.reduce((start, elem) => {
         let addClass =  elem.replace(/\s/g, '_');
           start +=`
             <div class="edit-field add-btn">
@@ -25,7 +19,7 @@ class AddUser {
           `;
   			return start;
   		},'');
-  		let resEditBasicField = addPhoto + open + `${editBasicField}</div>`;
+  		let resEditBasicField = `${addPhoto} ${open} ${editBasicField}</div>`;
   		return resEditBasicField;
   	};
 
@@ -34,7 +28,7 @@ class AddUser {
         	<div class="scroll-holder">
           		<div class="edit-info">
   		`;
-  		let editAdditionalField = this.additionalUserInfo.reduce((start, elem) => {
+  		let editAdditionalField = additionalUserInfo.reduce((start, elem) => {
        /* let addClass =  elem.replace(/\s/g, '_');*/
   			start += `
             	<div class="edit-field add-btn">

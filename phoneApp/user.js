@@ -1,15 +1,8 @@
 class User {
 	constructor(user) {
 		this.user = user;
-		this.options = [
-			{option: 'message', class: 'glyphicon-comment'},
-			{option: 'call', class: 'glyphicon-earphone'},
-			{option: 'video', class: 'glyphicon-facetime-video'},
-			{option: 'mail', class: 'glyphicon-envelope'}
-		];
-		this.additionalOptions = [
-			'Notes', 'Send message', 'Share contact', 'Add to favorites', 'Share my location', 'Block this caller'
-		];
+		this.createEditContacts = this.createEditContacts.bind(this);
+		this.deleteContact = this.deleteContact.bind(this);
 	};
 
 	showUser() {
@@ -21,7 +14,7 @@ class User {
 
 	lineOptions() {
 		let open = '<div class="options-line">';
-		let optionsLine = this.options.reduce((start, elem) => {
+		let optionsLine = options.reduce((start, elem) => {
 			start += `
 	          	<div class="${elem.option}">
 	            	<div class= "options-icon"><span class="icon glyphicon ${elem.class}" aria-hidden="true"></span></div>
@@ -30,7 +23,7 @@ class User {
 			`;
 			return start;
 		}, '');
-		let resOption = open + `${optionsLine}</div>`;
+		let resOption = `${open} ${optionsLine}</div>`;
 		return resOption;
 	};
 
@@ -49,35 +42,36 @@ class User {
 
 	tableOption() {
 		let open = '<div class="options-table">';
-		let optionsTable = this.additionalOptions.reduce((start, elem) => {
+		let optionsTable = additionalOptions.reduce((start, elem) => {
 			start += `<div class ="options-item"><a href="#">${elem}</a></div>`;
 			return start;
 		}, '');
 		let buttonEdit = `<button class="buttonEdit"> edit contact user </button>`
-		let resOptionTable = open + `${optionsTable}</div> ${buttonEdit}`;
+		let resOptionTable = `${open} ${optionsTable}</div> ${buttonEdit}`;
 		return resOptionTable;
 	};
 
-	addEvents() {
-		let self = this;
-		let buttonEdit = document.querySelector('button.buttonEdit');
-		//console.log(buttonEdit);
-		buttonEdit.addEventListener('click', function () {
-			let editContacts = new EditContact(self.user);
-			editContacts.renderEditContact();
-    });
-		let buttonDel = document.querySelector('button.remove-btn');
-		buttonDel.addEventListener('click', function() {
-			alert('Are you sure you want to delete this user?');
-      let url = `${API_URL}/${self.user.id}`;
-      fetch(url, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      });
-		});
+	createEditContacts() {
+    let editContacts = new EditContact(this.user);
+    editContacts.renderEditContact();
+  };
 
+	deleteContact() {
+    alert('Are you sure you want to delete this user?');
+    let url = `${API_URL}/${self.user.id}`;
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+  };
+
+	addEvents() {
+		let buttonEdit = document.querySelector('button.buttonEdit');
+		buttonEdit.addEventListener('click', this.createEditContacts);
+		let buttonDel = document.querySelector('button.remove-btn');
+		buttonDel.addEventListener('click', this.deleteContact);
 	};
 
 	renderUser() {
