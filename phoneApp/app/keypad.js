@@ -1,3 +1,6 @@
+import {buttonsContent} from "./constants";
+import AddUser from "./addUser";
+
 class Keypad {
   constructor() {
     this.monitorInput = this.monitorInput.bind(this);
@@ -85,3 +88,5 @@ class Keypad {
 	};
 
 };
+
+export default Keypad;

@@ -1,3 +1,7 @@
+import {basicUserInfo, additionalUserInfo} from "./constants";
+import {API_URL} from './constants';
+import User from './user';
+
 class AddUser {
 
   	fieldsBasicAddUserInfo() {
@@ -9,11 +13,10 @@ class AddUser {
         	</div>
   		`;
   		let editBasicField = basicUserInfo.reduce((start, elem) => {
-        let addClass =  elem.replace(/\s/g, '_');
           start +=`
             <div class="edit-field add-btn">
             			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-            			<input type="text" class="glyphicon-plus-sign ${addClass}" placeholder="${elem}"/>
+            			<input type="text" class="glyphicon-plus-sign ${elem.fieldName}" placeholder="${elem.placeholder}"/>
 								
             </div>
           `;
@@ -33,7 +36,7 @@ class AddUser {
   			start += `
             	<div class="edit-field add-btn">
               	<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                	<input type="text" class="glyphicon-plus-sign" placeholder="${elem}"/>
+                	<input type="text" class="glyphicon-plus-sign ${elem.fieldName}" placeholder="${elem.placeholder}"/>
             	</div>
   			`;
   			return start;
@@ -43,7 +46,7 @@ class AddUser {
               	<button href="#" class="delete-contact">delete contact</button>
             </div>
   		`;
-  		let resEditAdditionalField = open + `${editAdditionalField}${buttonDelContacts}</div>`;
+  		let resEditAdditionalField = `${open} ${editAdditionalField}${buttonDelContacts}</div>`;
   		return resEditAdditionalField;
   	};
 
@@ -59,17 +62,14 @@ class AddUser {
       addUser.addEventListener('click', function() {
         let input = document.querySelectorAll('input[placeholder]');
       	let objUser = [...input].reduce((done, elem) => {
-      		if(elem.className === 'glyphicon-plus-sign Email') {
+      		if(elem.className === 'glyphicon-plus-sign email') {
       			done.email = elem.value;
-					} else if(elem.className === 'glyphicon-plus-sign First_Name') {
+					} else if(elem.className === 'glyphicon-plus-sign firstName') {
       		  done.fullName = `${elem.value} `;
-          } else if(elem.className === 'glyphicon-plus-sign Last_Name') {
+          } else if(elem.className === 'glyphicon-plus-sign lastName') {
             done.fullName += elem.value;
-          } else if(elem.className === 'glyphicon-plus-sign Mobile_phone') {
-      		  done.phone = elem.value;
-          } else {
-            let key = elem.placeholder.replace(/\s/g, '_');
-            done[key] = elem.value;
+          } else if(elem.className === 'glyphicon-plus-sign phone') {
+            done.phone = elem.value;
           };
       		return done;
 				}, {});
@@ -80,7 +80,12 @@ class AddUser {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(objUser)
-        });
+        })
+          .then(response => response.json())
+          .then(data => {
+            let user = new User(data);
+            user.renderUser();
+          })
 			});
     }
 
@@ -102,3 +107,5 @@ class AddUser {
       this.addEvents();
   	};
 };
+
+export default AddUser;

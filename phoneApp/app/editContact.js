@@ -1,3 +1,6 @@
+import {basicUserInfo, additionalUserInfo, API_URL, data} from "./constants";
+import User from "./user";
+
 class EditContact {
 	constructor(user) {
 		this.user = user;
@@ -9,7 +12,7 @@ class EditContact {
 			start += `
           		<div class="edit-field add-btn">
             		<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-            		<input type="text" class="glyphicon-plus-sign" placeholder="${elem}"/>
+            		<input type="text" class="glyphicon-plus-sign ${elem.fieldName}" placeholder="${elem.placeholder}"/>
           		</div>
 			`;
 			return start;
@@ -27,7 +30,7 @@ class EditContact {
         	start += `
         		<div class="edit-field add-btn">
         			<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-            	<input type="text" class="glyphicon-plus-sign" placeholder="${elem}"/>
+            	<input type="text" class="glyphicon-plus-sign ${elem.fieldName}" placeholder="${elem.placeholder}"/>
         		</div>
         	`;
         	return start;
@@ -41,12 +44,48 @@ class EditContact {
         return resEditAdditionalField;
 	};
 
+	addEvents() {
+		let self = this;
+		let saveChanges = document.querySelector('button.editContacts');
+		saveChanges.addEventListener('click', function() {
+      let input = document.querySelectorAll('input[placeholder]');
+      let objUserForFetch = [...input].reduce((done, elem) => {
+        if(elem.className === 'glyphicon-plus-sign email') {
+          done.email = elem.value;
+        } else if(elem.className === 'glyphicon-plus-sign firstName') {
+          done.fullName = `${elem.value} `;
+        } else if(elem.className === 'glyphicon-plus-sign lastName') {
+          done.fullName += elem.value;
+        } else if(elem.className === 'glyphicon-plus-sign phone') {
+          done.phone = elem.value;
+        };
+        return done;
+      }, {});
+
+      let url = `${API_URL}/${self.user.id}`;
+      fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+				body: JSON.stringify(objUserForFetch)
+      })
+				.then((user) => {
+					return user.json();
+				})
+        .then(userJson => {
+          let userChenges = new User(userJson);
+          userChenges.renderUser()
+				})
+		});
+	};
+
 	renderEditContact() {
 		let captionEditContact = document.querySelector('.container.top-radius');
 		captionEditContact.innerHTML = `
 	      	<nav class="user-top-line">
 	        	<a href="user.html">Cancel</a>
-	        	<button  type = "submit" form = "edit-contact" formaction="#" formmethod="get" class = "done-btn">Done</button>
+	        	<button  type = "submit" form = "edit-contact" formaction="#" formmethod="get" class = "done-btn editContacts">Done</button>
 	      	</nav>
 		`;
 		let mainContainer = document.querySelector('main .container');
@@ -69,6 +108,9 @@ class EditContact {
         elem.value = this.user.email;
 			};
 		});
+    this.addEvents();
 	};
 
 };
+
+export default EditContact;

@@ -1,3 +1,7 @@
+import UsersContacts from "./userContacts";
+import Keypad from "./keypad";
+import AddUser from "./addUser";
+
 class Router {
   constructor() {
     this.buttonKeypad = document.querySelector('a.Keypad');
@@ -39,3 +43,5 @@ class Router {
      });
   };
 };
+
+export default Router;

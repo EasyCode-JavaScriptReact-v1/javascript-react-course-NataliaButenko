@@ -1,14 +1,33 @@
+import {options, additionalOptions} from "./constants";
+import EditContact from "./editContact";
+import {API_URL} from './constants';
+import UsersContacts from "./userContacts";
+
 class User {
 	constructor(user) {
-		this.user = user;
+	  Object.keys(user).forEach(key => {
+	    if(key === '_id') {
+	      this['id'] = user[key];
+      } else {
+        this[key] = user[key];
+      }
+    });
 		this.createEditContacts = this.createEditContacts.bind(this);
 		this.deleteContact = this.deleteContact.bind(this);
 	};
 
+	get name() {
+	  return this.fullName.split(' ')[0];
+  }
+
+  get lastName() {
+    return this.fullName.split(' ')[1];
+  }
+
 	showUser() {
 		return `
 	        <img src="user_img.png" alt="#" class=" user-img img-circle center-block">
-	        <div class="user-name ${this.user.id}">${this.user.name} ${this.user.lastName}</div>
+	        <div class="user-name ${this.id}">${this.name} ${this.lastName}</div>
 		`;
 	};
 
@@ -30,12 +49,12 @@ class User {
 	telNumber() {
 		return `
 	       	<div class="tel-number">
-	          <h4>mobile</h4>
-	          <div>${this.user.phone}</div>
+	          <h4>Mobile phone</h4>
+	          <div>${this.phone}</div>
 	        </div>
 	        <div class="tel-number">
-	          <h4>home</h4>
-	          <div> - - - - </div>
+	          <h4>Email</h4>
+	          <div>${this.email}</div>
 	        </div>
 		`;
 	};
@@ -52,25 +71,29 @@ class User {
 	};
 
 	createEditContacts() {
-    let editContacts = new EditContact(this.user);
+    let editContacts = new EditContact(this);
     editContacts.renderEditContact();
   };
 
 	deleteContact() {
     alert('Are you sure you want to delete this user?');
-    let url = `${API_URL}/${self.user.id}`;
+    let url = `${API_URL}/${this.id}`;
     fetch(url, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       },
-    });
+    })
+      .then(() => {
+        let contacts = new UsersContacts();
+        contacts.loadData();
+      })
   };
 
 	addEvents() {
 		let buttonEdit = document.querySelector('button.buttonEdit');
 		buttonEdit.addEventListener('click', this.createEditContacts);
-		let buttonDel = document.querySelector('button.remove-btn');
+		let buttonDel = document.querySelector('button.remove-btn-user');
 		buttonDel.addEventListener('click', this.deleteContact);
 	};
 
@@ -79,7 +102,7 @@ class User {
 		captionUser.innerHTML = `
 	      	<nav class="user-top-line">
 	        	<a href="user.html">Cancel</a>
-	        	<button  type = "submit" form = "edit-contact" formaction="#" formmethod="get" class = "remove-btn">Remove</button>
+	        	<button  type = "submit" form = "edit-contact" formaction="#" formmethod="get" class = "remove-btn-user">Remove</button>
 	      	</nav>
 		`;
 		let mainContainer = document.querySelector('main .container');
@@ -88,3 +111,5 @@ class User {
 	};
 	
 };
+
+export default User;

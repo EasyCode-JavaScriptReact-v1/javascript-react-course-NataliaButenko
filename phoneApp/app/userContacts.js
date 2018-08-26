@@ -1,3 +1,6 @@
+import {API_URL, data} from './constants';
+import User from './user';
+
 class UsersContacts {
 
 	createForm() {
@@ -27,7 +30,7 @@ class UsersContacts {
 			let openTbody = `
 				<tbody>
 			`;
-			let createTbody = dataUsers.reduce((start, elem) => {
+			let createTbody = data.users.reduce((start, elem) => {
 				start += `
 					<tr data-uid="${elem.id}">
            				<td>${elem.name}</td>
@@ -58,9 +61,9 @@ class UsersContacts {
 			} else if(e.target.tagName === 'TD') {
 				let id = e.target.parentNode.dataset.uid;
 				let obj;
-				for(let i = 0; i < dataUsers.length; i++) {
-					if(dataUsers[i].id === id) {
-						obj = dataUsers[i];
+				for(let i = 0; i < data.users.length; i++) {
+					if(data.users[i].id === id) {
+						obj = data.users[i];
 					};
 			  };
         let user = new User(obj);
@@ -132,7 +135,7 @@ class UsersContacts {
         return user.json();
       })
       .then(userJson => {
-      	let newUsers = userJson.map((elem) => {
+      	/*let newUsers = userJson.map((elem) => {
       	  const [name, lastName] = elem.fullName.split(' ');
       		return {
       			email: elem.email,
@@ -141,10 +144,12 @@ class UsersContacts {
 						id: elem._id,
 						phone: elem.phone,
 					}
-				});
-        dataUsers = newUsers;
+				});*/
+        data.users = userJson.map(item => new User(item)); //newUsers;
         this.renderForm();
       });
 	};
 	
 };
+
+export default UsersContacts;
