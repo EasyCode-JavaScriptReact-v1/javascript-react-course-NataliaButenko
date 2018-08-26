@@ -1,0 +1,17 @@
+{
+  "name": "phoneapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "start": "echo \"START\"",
+    "webpack": "./node_modules/.bin/webpack-cli"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  }
+}
